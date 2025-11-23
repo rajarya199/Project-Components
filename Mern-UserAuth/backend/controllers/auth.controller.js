@@ -10,3 +10,61 @@ const generateToken=(user)=>{
     );
 
 }
+
+//register user
+
+export const registerUser=async(req,res)=>{
+const{fullname,email,password}=req.body 
+try{
+       // Check if user exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: 'User already exists' });
+
+}
+//create new user
+const user = await User.create({ fullname, email, password });
+
+//generate token after registration
+const token = generateToken(user);
+
+res.status(201).json({
+    message:"Registration Sucessfull",
+    token,
+    user:{id:user._id,fullname:user.fullname,email:user.email}
+});
+}
+catch(error){
+    res.status(500).json({ message: 'Server error' });
+
+}
+}
+
+// login the user
+export const loginUser=async(req,res)=>{
+        const { email, password } = req.body;
+
+    try{
+        //check email of user
+            const user = await User.findOne({ email });
+ if (!user)
+      return res.status(400).json({ message: "Invalid email or password" });
+
+ //check password
+const isMatch = await user.matchPassword(password);
+    if (!isMatch)
+      return res.status(400).json({ message: "Invalid email or password" });
+
+    //generate token
+        const token = createToken(user);
+  res.json({
+      message: "Login successful",
+      token,
+      user: { id: user._id, fullname: user.fullname, email: user.email }
+    });
+    }
+    catch(error){
+    res.status(500).json({ message: "Server Error", error });
+
+    }
+}
