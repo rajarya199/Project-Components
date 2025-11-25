@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState} from 'react'
 
 const Register = () => {
      const [form, setForm] = useState({
@@ -43,8 +43,15 @@ const Register = () => {
         Register
       </button>
     </form>
+    <p className="mt-4 text-center text-sm text-gray-600">
+      Already have an account?{' '}
+      <a href="/login" className="text-blue-500 hover:underline">
+        Login here
+      </a>
+    </p>
   </div>
 </div>
+
 
 
   )
