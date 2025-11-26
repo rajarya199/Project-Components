@@ -1,12 +1,29 @@
-import React,{useState} from 'react'
-
+import React,{useState,useContext} from 'react'
+import { UserContext } from '../context/user.context';
+import { useNavigate } from "react-router-dom";
+import API from '../api/axios';
 const Login = () => {
+  const { setUser } = useContext(UserContext);
+  const navigate = useNavigate();
       const [form, setForm] = useState({ 
         email: "",
          password: "" 
         });
     const handleSubmit = async (e) => {
     e.preventDefault();
+    try{
+      const res=await API.post('/login',form)
+        // Save token & user
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("user", JSON.stringify(res.data.user));
+
+      setUser(res.data.user);
+
+      navigate("/");
+    }
+    catch(error){
+      console.error("Login failed:", error);
+    }
 
    
   };
