@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { UserContext } from './user.context'; 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   // Load user from localStorage on app start
   useEffect(() => {
@@ -12,6 +13,8 @@ export const UserProvider = ({ children }) => {
     if (token && storedUser) {
       setUser(JSON.parse(storedUser));
     }
+        setLoading(false);
+
   }
     loadUser();
   }, []);
@@ -24,7 +27,7 @@ export const UserProvider = ({ children }) => {
   };
 
   return (
-    <UserContext.Provider value={{ user, setUser, logout }}>
+    <UserContext.Provider value={{ user, setUser, logout,loading }}>
       {children}
     </UserContext.Provider>
   );
