@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { User } from "../models/user.model";
+import { User } from "../models/user.model.js";
 
 //create a token(jwt token metjod)
 const generateToken=(user)=>{
@@ -35,8 +35,8 @@ res.status(201).json({
 });
 }
 catch(error){
-    res.status(500).json({ message: 'Server error' });
-
+  console.error("REGISTER ERROR:", error.message, error.stack); 
+  res.status(500).json({ message: 'Server error', error: error.message });
 }
 }
 
@@ -56,7 +56,7 @@ const isMatch = await user.matchPassword(password);
       return res.status(400).json({ message: "Invalid email or password" });
 
     //generate token
-        const token = createToken(user);
+        const token = generateToken(user);
   res.json({
       message: "Login successful",
       token,
@@ -64,7 +64,7 @@ const isMatch = await user.matchPassword(password);
     });
     }
     catch(error){
-    res.status(500).json({ message: "Server Error", error });
-
+ console.error("LOGIN ERROR:", error);
+    res.status(500).json({ message: "Server error", error });
     }
 }
