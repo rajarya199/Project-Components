@@ -1,6 +1,11 @@
-import React,{useState} from 'react'
-
+import React,{useState,useContext} from 'react'
+import API from '../api/axios';
+import { useNavigate } from "react-router-dom";
+import { UserContext } from '../context/user.context';
 const Register = () => {
+  const navigate = useNavigate();
+  const { setUser } = useContext(UserContext);
+
      const [form, setForm] = useState({
     fullname: "",
     email: "",
@@ -8,6 +13,22 @@ const Register = () => {
   });
     const handleSubmit = async (e) => {
     e.preventDefault();
+    try{
+      const res=await API.post('/register',form)
+ // Save token + user 
+ if(res.data){
+ localStorage.setItem("token", res.data.token);
+    localStorage.setItem("user", JSON.stringify(res.data.user));
+        setUser(res.data.user);
+        navigate("/");  //auto login after registration
+ }
+   
+      console.log("Registration successful:")
+
+    }
+    catch(error){
+      console.error("Registration failed:", error);
+    }
 
    
   };
