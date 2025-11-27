@@ -15,8 +15,16 @@ export const authorizeUser= async (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
             // 4. Attach the decoded user information to the request object
+ // Fetch user (WITHOUT password)
+    const user = await User.findById(decoded.id).select("-password");
 
-    req.user = await User.findById(decoded.id).select("-password");
+    // Check user existence
+    if (!user) {
+      return res.status(401).json({ message: "User not found or removed" });
+    }
+
+    req.user = user; // Attach user to request
+   
     next();
   } catch (error) {
     return res.status(401).json({ message: "Token invalid or expired" });
