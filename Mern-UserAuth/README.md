@@ -56,7 +56,7 @@ Stored at-Client Side(any of LocalStorage,Cookies,sessionStorage)
 ---
 
 ### 3️⃣ **Authenticated API Request**
-- fontend API setup( add token in header authentication for each request)
+- fontend API setup( add token in header authentication for each request) \
 Backend middleware:
 
 - Checks if token exists  
