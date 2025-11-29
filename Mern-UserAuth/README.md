@@ -11,3 +11,14 @@
   <img src="https://img.shields.io/badge/-Axios-black?style=for-the-badge&logo=axios&logoColor=white&color=5A29E4" alt="axios" />
 
   </div>
+
+  ## 🌟 Overview
+JWT token based user authentication system in MERN stack App.`\
+
+Token-A string signed by the server containing user data.`\
+Stored at-Client Side(any of LocalStorage,Cookies,sessionStorage)
+
+###Purpose-
+-stateless authentication (no server memory needed)
+-used widely in MERN apps, APIs, mobile apps
+
