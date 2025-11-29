@@ -1,4 +1,4 @@
-# User Authentication SYstem with JWT token (saved in localStorage) in MERN App
+#  🔐 MERN User Authentication System (JWT + LocalStorage)
 <div align="center">
 
   <img src="https://img.shields.io/badge/-Node.js-black?style=for-the-badge&logo=node.js&logoColor=white&color=339933" alt="nodejs" />
@@ -13,12 +13,76 @@
   </div>
 
   ## 🌟 Overview
-JWT token based user authentication system in MERN stack App.`\
+JWT token based user authentication system in MERN stack App.
 
-Token-A string signed by the server containing user data.`\
+Token-A string signed by the server containing user data. \
 Stored at-Client Side(any of LocalStorage,Cookies,sessionStorage)
 
-###Purpose-
--stateless authentication (no server memory needed)
--used widely in MERN apps, APIs, mobile apps
+---
 
+## 🧠 Why JWT Authentication?
+
+- ✔ Stateless (server does not store sessions)
+- ✔ Perfect for SPAs like React
+- ✔ Fast & scalable across multiple servers
+- ✔ Standard for modern web/mobile APIs
+
+---
+## 🔁 Complete Authentication Workflow
+
+### 1️⃣ **User Registration Flow**
+
+1. User submits registration form (name, email, password).
+2. Backend validates the data.
+3. Password is hashed using **bcrypt**.
+4. User is saved to MongoDB.
+5. Backend generates a **JWT token**.
+6. Token is returned to the frontend.
+7. Frontend stores token in **localStorage**.
+
+---
+### 2️⃣ **User Login Flow**
+
+1. User enters email + password.
+2. Backend checks if user exists.
+3. Password compared using bcrypt.
+4. If valid:
+   - Generate JWT token
+   - Return token + user data
+5. Frontend:
+   - Saves token to **localStorage**
+   - Saves user globally via Context API
+
+---
+
+### 3️⃣ **Authenticated API Request**
+- fontend API setup( add token in header authentication for each request)
+Backend middleware:
+
+- Checks if token exists  
+- Verifies token  
+- Decodes user information  
+
+If valid → request proceeds.
+
+---
+
+### 4️⃣ **Protected Routes (Frontend)**
+
+Only logged-in users can access certain pages.
+
+Example logic:
+
+- If `token` exists → allow access  
+- Else → redirect to login  
+
+---
+### 5️⃣ **Logout Flow**
+
+On logout:
+
+- Remove token from localStorage
+- Clear user context
+- Redirect to login page
+
+---
