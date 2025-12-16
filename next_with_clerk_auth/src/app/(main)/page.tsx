@@ -22,10 +22,20 @@ export default function Home() {
         <SignedOut>
           <div className="space-y-3">
             {/* Email/Password Modal */}
-            <div className=' p-2 justify-evenly flex'>
- <SignInButton mode="modal" />
-            <SignUpButton mode="modal" />
-            </div>
+<div className='p-2 justify-evenly flex gap-3'>
+  <SignInButton mode="modal">
+    <button className='px-6 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all font-medium shadow-lg'>
+      Login
+    </button>
+  </SignInButton>
+  
+  <SignUpButton mode="modal">
+    <button className='px-6 py-2 bg-emerald-600 text-white rounded-xl hover:bg-emerald-700 focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-all font-medium shadow-lg'>
+      Sign Up
+    </button>
+  </SignUpButton>
+</div>
+
            
             
             {/* Social Login Buttons */}
