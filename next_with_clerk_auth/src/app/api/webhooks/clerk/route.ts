@@ -13,25 +13,33 @@ export async function POST(req: NextRequest) {
     const { id } = evt.data
     const eventType = evt.type
    
-
+ console.log(`Received webhook with ID ${id} and event type of ${eventType}`)
+    // console.log('Webhook payload:', evt.data)
 if(eventType==='user.created'){
     const user=evt.data as UserJSON
     const newUser=await createUser(user)
     if(newUser){
-        const client= await clerkClient()
+      try{
+          const client= await clerkClient()
          await client.users.updateUser(user.id,{
             publicMetadata:{
-                userId:newUser.id,
+                userDbId:newUser.id,
                 userRole:newUser.role,
             }
         })
+                  console.log('🔄 Clerk metadata updated:', user.id)
+
+      }
+      catch(error){
+          console.error('❌ Clerk metadata update failed:', error)
+
+      }
     }
     return NextResponse.json({ success: true })
 
 }
 
- console.log(`Received webhook with ID ${id} and event type of ${eventType}`)
-    // console.log('Webhook payload:', evt.data)
+
     return new Response('Webhook received', { status: 200 })
   } catch (err) {
     console.error('Error verifying webhook:', err)
