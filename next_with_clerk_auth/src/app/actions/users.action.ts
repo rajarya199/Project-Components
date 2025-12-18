@@ -3,7 +3,7 @@ import { revalidatePath } from 'next/cache'
 import type { UserJSON } from '@clerk/nextjs/server'
 
 import { connectToDatabase } from '@/lib/dbConfig'
-import {User} from '@/model/user.model'
+import User from '@/model/user.model'
 export async function createUser(user: UserJSON) {
 try{
       await connectToDatabase()
