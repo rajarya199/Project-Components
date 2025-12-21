@@ -17,14 +17,14 @@ export async function POST(req: NextRequest) {
     // console.log('Webhook payload:', evt.data)
 if(eventType==='user.created'){
     const user=evt.data as UserJSON
-    const newUser=await createUser(user)
-    if(newUser.success){
+    const result=await createUser(user)
+    if(result.success && result.data){
       try{
           const client= await clerkClient()
          await client.users.updateUser(user.id,{
             publicMetadata:{
-                userDbId:newUser.data.id,
-                userRole:newUser.data.role,
+                userDbId:result.data.id,
+                userRole:result.data.role,
             }
         })
                   console.log('🔄 Clerk metadata updated:', user.id)
@@ -42,7 +42,7 @@ if(eventType==='user.created'){
 if(eventType==='user.updated'){
   const user=evt.data as UserJSON
   try{
-    const updatedUser=await updateUser(evt.data.id,user)
+    const updatedUser=await updateUser(user)
         return NextResponse.json({ success: updatedUser.success })
 
   }
