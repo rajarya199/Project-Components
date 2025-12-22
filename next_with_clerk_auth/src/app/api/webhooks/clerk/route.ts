@@ -1,6 +1,6 @@
 import { clerkClient} from '@clerk/nextjs/server'
 import { verifyWebhook } from '@clerk/nextjs/webhooks'
-import { createUser, updateUser } from '@/app/actions/users.action'
+import { createUser, deleteUser, updateUser } from '@/app/actions/users.action'
 import { NextResponse,NextRequest } from 'next/server'
 import type { UserJSON } from '@clerk/nextjs/server'
 
@@ -49,6 +49,25 @@ if(eventType==='user.updated'){
   catch(error){
       console.error('Error updating user:', error);
 
+  }
+}
+
+if(eventType==='user.deleted'){
+  const { id } = evt.data as { id: string }
+
+  try{
+    const result=await deleteUser(id)
+ if (result.success) {
+          console.log('🔄 User deleted from database:', id)
+        } else {
+          console.error('❌ User deletion failed:', result.error)
+        }
+        return NextResponse.json({ success: true })
+
+  }
+  catch(error){
+      console.error('❌ Error processing user deletion:', error)
+        return NextResponse.json({ success: false }, { status: 500 })
   }
 }
     return new Response('Webhook received', { status: 200 })
