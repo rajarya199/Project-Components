@@ -52,3 +52,20 @@ await connectToDatabase()
         return { success: false, error: error instanceof Error ? error.message : 'Update failed' };
   }
 }
+
+export async function deleteUser(clerkId: string) {
+  try{
+    await connectToDatabase()
+      const existingUser = await User.findOne({ clerkId: clerkId })
+    if (!existingUser) {
+      console.error(`User with clerkId ${clerkId} not found`);
+    }
+      const deletedUser = await User.findOneAndDelete({ clerkId })
+      return { success: true, data: deletedUser };
+  }
+
+  catch(error){
+       console.error('❌ deleteUser failed:', error)
+    return { success: false, error: 'Failed to delete user' }
+  }
+}
