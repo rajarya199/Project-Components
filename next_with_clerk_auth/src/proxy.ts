@@ -22,10 +22,11 @@ export default clerkMiddleware(async (auth, req) => {
    // 🔐 Require authentication for everything else
 
  const { sessionClaims } = await auth.protect()
-const userRole =
-  (sessionClaims?.publicMetadata as { userRole?: string })?.userRole
+  const userRole = sessionClaims?.userRole as string | undefined
 
-      // Dashboard: Only admin role
+  console.log('ROLE:', userRole)
+
+  // Dashboard: Only admin role
   if (isAdminRoute(req) && userRole !== 'admin') {
     return Response.redirect(new URL('/unauthorized', req.url))
   }
