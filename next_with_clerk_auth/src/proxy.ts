@@ -1,15 +1,3 @@
-//  import { clerkMiddleware } from '@clerk/nextjs/server';
-
-// export default clerkMiddleware();
-
-// export const config = {
-//   matcher: [
-//     // Skip Next.js internals and all static files, unless found in search params
-//     '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
-//     // Always run for API routes
-//     '/(api|trpc)(.*)',
-//   ],
-// };
 
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 const isPublicRoute = createRouteMatcher([
@@ -21,11 +9,27 @@ const isPublicRoute = createRouteMatcher([
   '/sign-in(.*)', 
   '/sign-up(.*)'
 ])
-
+const isProfileRoute = createRouteMatcher([
+  '/profile(.*)'
+])
+const isAdminRoute = createRouteMatcher([
+  '/dashboard(.*)'
+])
 export default clerkMiddleware(async (auth, req) => {
-  if (!isPublicRoute(req)) {
-    await auth.protect();
+  // Public routes → no auth needed
+  if (isPublicRoute(req)) return
+
+   // 🔐 Require authentication for everything else
+
+ const { sessionClaims } = await auth.protect()
+const userRole =
+  (sessionClaims?.publicMetadata as { userRole?: string })?.userRole
+
+      // Dashboard: Only admin role
+  if (isAdminRoute(req) && userRole !== 'admin') {
+    return Response.redirect(new URL('/unauthorized', req.url))
   }
+    if (isProfileRoute(req)) return
 });
 
 export const config = {
