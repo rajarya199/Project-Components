@@ -2,9 +2,12 @@
 import React ,{useState} from 'react'
 import { SignedOut,UserButton ,SignedIn,useUser} from '@clerk/nextjs'
 import Link from 'next/link'
-import { Menu, X } from "lucide-react"
+import { Menu, X ,LayoutDashboard } from "lucide-react"
 import NavItems from './NavItems'
 const Navbar = () => {
+  const { user } = useUser(); 
+  const userRole = user?.publicMetadata?.userRole as string | undefined;
+  console.log("User Role:", userRole);
     const [isOpen, setIsOpen] = useState(false)
   return (
     <header className='w-full border-b'>
@@ -40,7 +43,17 @@ const Navbar = () => {
                   avatarBox: "w-9 h-9",
                 },
               }}
-            />
+            >
+              <UserButton.MenuItems>
+                   {userRole === "admin" && ( 
+                    <UserButton.Link
+                      label="Dashboard"
+                        labelIcon={<LayoutDashboard size={16} />}
+                      href="/dashboard"
+                    />
+                  )}
+              </UserButton.MenuItems>
+              </UserButton>
           </SignedIn>
         </div>
 
