@@ -28,7 +28,7 @@ export async function GET() {
     // 3️⃣ Fetch users
     await connectToDatabase();
     const users = await User.find().sort({ createdAt: -1 });
-
+//return {daata,status} (in data-->success:true,data:users)
     return NextResponse.json({ success: true, data: users }, { status: 200 });
   } catch (error) {
     console.error("❌ Error fetching users:", error);
