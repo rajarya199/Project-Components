@@ -89,7 +89,7 @@ function NavItem({
   pathname: string
   onClick?: () => void
 }) {
-  const active = pathname === href || pathname.startsWith(`${href}/`)
+  const active = pathname === href
 
   return (
     <Link
