@@ -2,10 +2,14 @@ import { NextResponse } from "next/server";
 import User from "@/model/user.model";
 import { connectToDatabase } from "@/lib/dbConfig";
 import { auth,clerkClient } from "@clerk/nextjs/server";
+interface userProps{
+    params: Promise<{ id: string }>;
 
+}
 export async function PATCH( req: Request,
-  { params }: { params: { id: string } }){
+  { params }: userProps){
     try{
+      const { id } = await params;
           // 1️ Auth check
     const { userId, sessionClaims } = await auth();
 
@@ -36,7 +40,7 @@ export async function PATCH( req: Request,
   }
 
    const updatedUser = await User.findByIdAndUpdate(
-    params.id,
+    id,
     { role },
     { new: true }
   )

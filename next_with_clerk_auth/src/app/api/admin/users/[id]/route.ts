@@ -2,9 +2,14 @@ import { NextResponse } from "next/server";
 import User from "@/model/user.model";
 import { connectToDatabase } from "@/lib/dbConfig";
 import { auth,clerkClient } from "@clerk/nextjs/server";
+interface userProps{
+    params: Promise<{ id: string }>;
 
-export async function DELETE(req:Request,{ params }: { params: { id: string } }){
+}
+export async function DELETE(req:Request,{ params }: userProps){
     try{
+          const { id } = await params;
+
         //auth check
           const { userId, sessionClaims } = await auth();
 
@@ -25,7 +30,7 @@ export async function DELETE(req:Request,{ params }: { params: { id: string } })
       );
     }
       await connectToDatabase()
-    const user = await User.findById(params.id)
+    const user = await User.findById(id)
     
     if (!user) {
       return NextResponse.json({ success: false, error: "User not found" }, { status: 404 })
@@ -35,7 +40,7 @@ export async function DELETE(req:Request,{ params }: { params: { id: string } })
   await client.users.deleteUser(user.clerkId)
 
   //delete from db
-    await User.findByIdAndDelete(params.id)
+    await User.findByIdAndDelete(id)
 return NextResponse.json({success:true},{status:200})
 
     }
