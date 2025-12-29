@@ -1,7 +1,7 @@
 "use client"
 import axios from 'axios';
 import React,{useState,useEffect} from 'react'
-import { MoreHorizontal, Search, Filter } from "lucide-react";
+import { Search, Filter } from "lucide-react";
 import { AdminUser } from '@/types';
 import UserTable from './UserTable';
 const UserSection = () => {
@@ -56,7 +56,8 @@ setUsers(res.data.data)
         </div>
 
       </div>
-      <UserTable users={filteredUsers} />
+<UserTable users={filteredUsers} setUsers={setUsers} />
+
     </div>
   )
 }
