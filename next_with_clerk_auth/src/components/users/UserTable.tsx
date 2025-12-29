@@ -1,8 +1,25 @@
 import React from "react";
 import { MoreHorizontal } from "lucide-react";
 import { AdminUser } from "@/types";
+import AdminUserAction from "./AdminUserAction";
 
-const UserTable = ({ users }: { users: AdminUser[] }) => {
+interface Props {
+  users: AdminUser[]
+  setUsers: React.Dispatch<React.SetStateAction<AdminUser[]>>
+}
+
+const UserTable = ({ users, setUsers }: Props) => {
+  console.log("user data:",users)
+  const handleUpdated = (updated: AdminUser) => {
+    setUsers((prev) =>
+      prev.map((u) => (u._id === updated._id ? updated : u))
+    )
+  }
+
+ const handleDeleted = (id: string) => {
+    setUsers((prev) => prev.filter((u) => u._id !== id))
+  }
+
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full divide-y divide-gray-200">
@@ -49,8 +66,8 @@ const UserTable = ({ users }: { users: AdminUser[] }) => {
               <td className="px-6 py-4 whitespace-nowrap">
                 <span className={`px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
                   user.role === "admin"
-                    ? "bg-red-100 text-red-800"
-                    : "bg-green-100 text-green-800 "
+                    ? "bg-red-200 text-red-800"
+                    : "bg-green-200 text-green-800 "
                 }`}>
                   {user.role}
                 </span>
@@ -58,8 +75,12 @@ const UserTable = ({ users }: { users: AdminUser[] }) => {
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 ">
                 {new Date(user.createdAt).toLocaleDateString()}
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                <MoreHorizontal className="w-5 h-5 text-gray-400 hover:text-gray-900 cursor-pointer mx-1" />
+                   <td className="px-6 py-4 text-right">
+                <AdminUserAction
+                  user={user}
+                  onUpdated={handleUpdated}
+                  onDeleted={handleDeleted}
+                />
               </td>
             </tr>
           ))}
