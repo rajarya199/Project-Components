@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from "axios"
-import { useState } from "react"
+import { useState ,useEffect,useRef} from "react"
 import { MoreHorizontal, Trash, Shield, ShieldOff } from "lucide-react"
 import { AdminUser } from "@/types"
 interface Props {
@@ -11,6 +11,24 @@ interface Props {
 const AdminUserAction = ({user,onUpdated,onDeleted}:Props) => {
     const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
+
+  const menuRef = useRef<HTMLDivElement>(null)
+
+  /* 🔹 Close on outside click */
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      //menuRef.current.contains(e.target)--true if clicked inside
+      //false if clicked outside
+
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setOpen(false)
+      }
+    }
+
+    if (open) document.addEventListener("mousedown", handleClickOutside)
+    return () => document.removeEventListener("mousedown", handleClickOutside)
+  }, [open])
+
 
   const changeRole=async(role:"admin"|"user")=>{
     try{
@@ -50,7 +68,7 @@ const AdminUserAction = ({user,onUpdated,onDeleted}:Props) => {
     }
   }
     return (
-    <div className='relative'>
+    <div ref={menuRef} className='relative'>
            <button
         onClick={() => setOpen(!open)}
         className="p-2 rounded-md hover:bg-gray-100"
