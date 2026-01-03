@@ -14,3 +14,15 @@
 
 </div>
 
+## Features
+- Next.js 16+ with App Router
+- Clerk authentication system
+- Tailwind CSS for styling
+- MongoDB database with Mongoose ODM
+- Axios for API requests
+- Full-stack React application
+
+## Quick Start
+```bash
+npm install
+npm run dev
