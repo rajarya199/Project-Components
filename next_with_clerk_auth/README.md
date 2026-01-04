@@ -13,14 +13,15 @@
   <img src="https://img.shields.io/badge/-Node.js-black?style=for-the-badge&logo=node.js&logoColor=white&color=339933" alt="nodejs"/>
 
 </div>
-
-## Features
-- Next.js 16+ with App Router
-- Clerk authentication system
-- Tailwind CSS for styling
-- MongoDB database with Mongoose ODM
-- Axios for API requests
-- Full-stack React application
+  
+## ✨ Features
+- 🚀 Server-side rendering with Next.js
+- 👥 User authentication with Clerk
+- 📱 Responsive design with Tailwind CSS
+- 🗄️ MongoDB database with Mongoose
+- ⚛️ Component-based React architecture
+- 🎨 Beautiful UI with Lucide React icons
+- ⚡Axios for API request
 
 ## 🛠 Tech Stack
 - ⚡ **Next.js** — React framework for server-side rendering & static generation
