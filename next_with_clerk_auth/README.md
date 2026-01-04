@@ -22,6 +22,16 @@
 - Axios for API requests
 - Full-stack React application
 
+## 🛠 Tech Stack
+- ⚡ **Next.js** — React framework for server-side rendering & static generation
+- 🍃 **MongoDB + Mongoose** — NoSQL database with schema ODM
+- 👤 **Clerk** — User authentication & management
+- ⚛️ **React** — Component-based UI framework
+- ⚡ **Axios** — HTTP requests client
+- ✨ **Lucide React** — Beautiful icon library for React
+- 🚀 **TypeScript** — Typed JavaScript superset
+
+
 ## Quick Start
 ```bash
 npm install
