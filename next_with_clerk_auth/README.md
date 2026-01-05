@@ -20,7 +20,7 @@
 - 📱 Responsive design with Tailwind CSS
 - 🗄️ MongoDB database with Mongoose
 - ⚛️ Component-based React architecture
-- 🎨 Beautiful UI with Lucide React icons
+- 🎨 Beautiful UI ,icons with Lucide React icons
 - ⚡Axios for API request
 
 ## 🛠 Tech Stack
@@ -28,6 +28,7 @@
 - 🍃 **MongoDB + Mongoose** — NoSQL database with schema ODM
 - 👤 **Clerk** — User authentication & management
 - ⚛️ **React** — Component-based UI framework
+- 💨 **Tailwind CSS** — Utility-first CSS framework
 - ⚡ **Axios** — HTTP requests client
 - ✨ **Lucide React** — Beautiful icon library for React
 - 🚀 **TypeScript** — Typed JavaScript superset
